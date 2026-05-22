@@ -1,0 +1,168 @@
+:root {
+    --bg-color: #121214;
+    --form-bg: #202024;
+    --text-color: #e1e1e6;
+    --primary: #8257e5;
+    --primary-hover: #9466ff;
+    --danger: #f75a68;
+    --border: #323238;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    margin: 0;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.container {
+    width: 100%;
+    max-width: 800px;
+}
+
+h1, h2 {
+    color: #fff;
+    text-align: center;
+}
+
+form {
+    background-color: var(--form-bg);
+    padding: 20px;
+    border-radius: 8px;
+    border: 1px solid var(--border);
+    margin-bottom: 30px;
+    display: grid;
+    gap: 15px;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+label {
+    font-size: 14px;
+    font-weight: 600;
+}
+
+input, textarea {
+    background-color: var(--bg-color);
+    border: 1px solid var(--border);
+    padding: 10px;
+    border-radius: 4px;
+    color: #fff;
+    font-size: 14px;
+}
+
+input:focus, textarea:focus {
+    outline: 1px solid var(--primary);
+}
+
+input[readonly] {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+button {
+    cursor: pointer;
+    padding: 12px;
+    border: none;
+    border-radius: 4px;
+    font-weight: bold;
+    font-size: 14px;
+    transition: background 0.2s;
+}
+
+.btn-primary {
+    background-color: var(--primary);
+    color: #fff;
+}
+
+.btn-primary:hover {
+    background-color: var(--primary-hover);
+}
+
+.btn-return {
+cursor: pointer;
+    padding: 12px;
+    border: none;
+    border-radius: 4px;
+    font-weight: bold;
+    font-size: 14px;
+    background-color: transparent; 
+    color: var(--text-color);
+    text-decoration: none; 
+    display: inline-block; 
+    transition: background 0.2s;
+}
+
+.btn-return:hover {
+    background-color: var(--border);
+}
+
+.btn-clear {
+    background-color: var(--primary);
+    color: #fff;
+}
+
+.btn-clear:hover {
+    background-color: var(--border);
+}
+
+.button-group {
+    display: flex;
+    gap: 10px;
+}
+
+.table-container {
+    overflow-x: auto;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: var(--form-bg);
+    border-radius: 8px;
+    overflow: hidden;
+    border: 1px solid var(--border);
+}
+
+th, td {
+    padding: 12px 15px;
+    text-align: left;
+    border-bottom: 1px solid var(--border);
+}
+
+th {
+    background-color: #29292e;
+    color: var(--primary);
+    font-weight: 600;
+}
+
+tr:hover {
+    background-color: #29292e;
+}
+
+.actions {
+    display: flex;
+    gap: 5px;
+}
+
+.btn-edit {
+    background-color: #e7a74e;
+    color: #000;
+    padding: 5px 10px;
+    font-size: 12px;
+}
+
+.btn-delete {
+    background-color: var(--danger);
+    color: #fff;
+    padding: 5px 10px;
+    font-size: 12px;
+}

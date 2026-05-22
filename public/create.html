@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Account Vault - Create </title>
+    <link rel="stylesheet" href="css/create.css">
+</head>
+<body>
+
+    <div class="container">
+        <div class="header-actions">
+            <a href="index.html" type="button" class="btn-return">← Return to List</a>
+        </div>
+
+        <form id="accountForm">
+            <h2 id="formTitle">Save Domain</h2>
+
+            <div class="form-group">
+                <label for="dominio">Domain (Ex: github.com)</label>
+                <input type="text" id="dominio" required placeholder="Digite o domínio">
+            </div>
+
+            <div class="form-group">
+                <label for="email">E-mail</label>
+                <input type="email" id="email" placeholder="Digite o e-mail">
+            </div>
+
+            <div class="form-group">
+                <label for="user">User</label>
+                <input type="text" id="user" placeholder="Digite o usuário">
+            </div>
+
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input type="text" id="password" required placeholder="Digite a senha">
+            </div>
+
+            <div class="form-group">
+                <label for="additional_info">Additional Info</label>
+                <textarea id="additional_info" rows="3" placeholder="Observações..."></textarea>
+            </div>
+
+            <div class="button-group">
+                <button type="submit" class="btn-primary" id="btnSalvar">Save Domain</button>
+                <button type="button" class="btn-clear" id="btnLimpar">Clear</button>
+            </div>
+        </form>
+    </div>
+
+    <script src="js/create.js"></script>
+</body>
+</html>
