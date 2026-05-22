@@ -1,3 +1,7 @@
+<p align="center">
+  <img src=".public/assets/accountvault.png" width="220"/>
+</p>
+
 # AccountVault
 
 Sistema de armazenamento e gerenciamento de credenciais de acesso para sites, aplicações, plataformas e contas em geral.
