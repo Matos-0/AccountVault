@@ -14,13 +14,12 @@ app.use(cors());
 app.use(express.json());
 app.use(express.static(path.join(__dirname, '..', 'public')));
 
-
 app.listen(PORT, async () => {
-    console.log(`ervidor iniciado emh ttp://localhost:${PORT}`)
+    console.log(`Server Starting in ttp://127.0.0.1:${PORT}`)
     try {
-        await open(`http://localhost:${PORT}/index.html`);
+        await open(`http://127.0.0.1:${PORT}/index.html`);
     } catch (error) {
-        console.error('Não foi possível abrir o navegador automaticamente:', error);
+        console.error('The browser could not open automatically.:', error);
     }
 });
 
@@ -56,6 +55,18 @@ app.get('/accounts', async (req: Request, res: Response) => {
     try {
 
         const accounts = await readAccounts();
+
+        const idAccount = req.query.id;
+  
+        if (idAccount) {
+            const row = accounts.find(r => String(r.id) === String(idAccount));
+
+            if (row) {
+                return res.json(row);
+            } else {
+                return res.status(404).json({erro: "Account not found"})
+            }
+        }
 
         return res.json(accounts);
 
@@ -114,20 +125,31 @@ app.put('/accounts/:id', async (req, res) => {
     try{
         
         const {id} = req.params;
+
+        const newData = req.body;
+
         const account = await readAccounts();
 
-        const accountIndex = account.findIndex(a => a.id == id);
+        const accountIndex = account.findIndex(a => String(a.id) === String(id));
 
         if (accountIndex === -1) {
             return res.status(404).json({ error: 'account not found.' })
         }
         
+        account[accountIndex] = {
+            ...account[accountIndex],
+            ...newData
+        };
+
         await writeAccounts(account);
         
-        res.json(account[accountIndex])
+        return res.status(200).json(account[accountIndex])
 
-    } catch {
-        res.status(500).json({error: "Error updating account."})
+    } catch (error) {
+
+        console.error(error);
+
+        res.status(500).json({error: "Error updating account."});
     }
 
 });
@@ -137,24 +159,29 @@ app.delete('/accounts/:id', async (req, res) => {
     try{
         
         const {id} = req.params;
-        const account = await readAccounts();
 
-        const accountFiltered = account.filter(a => a.id == id);
+        const accounts = await readAccounts();
 
-        if (account.length === accountFiltered.length) {
-            return res.status(404).json({error: 'account not found.'})
+        const accountExists = accounts.some(a => String(a.id) == String(id));
+        
+        if (!accountExists) {
+            return res.status(404).json({error: 'Account not found.'})
         }
 
-        await writeAccounts(accountFiltered);
-        res.json({message: 'Account deletada com sucesso.'})
-    } catch {
+        const filteredAccounts = accounts.filter(a => String(a.id) !== String(id))
+
+        await writeAccounts(filteredAccounts);
+        
+        res.status(200).json({message: 'Account deleted.'})
+
+    } catch (error ){
+        console.error(error);
         res.status(500).json({error: "Error deleting account"})
     }
 
 });
 
-
 // listener
 app.listen(PORT, () => {
-    console.log(`Servidor rodando na porta ${PORT}`);
+    console.log(`Account Vault running...`);
 });

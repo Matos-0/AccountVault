@@ -21,7 +21,7 @@ body {
 
 .container {
     width: 100%;
-    max-width: 1000px;
+    max-width: 2000px;
 }
 
 h1, h2 {
@@ -168,4 +168,42 @@ tr:hover {
 .btn-delete {
     background-color: var(--danger);
     color: #fff;
+}
+
+.copy-field {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.btn-copy {
+    min-width: 28px;
+    height: 28px;
+
+    background: transparent;
+    border: none;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    cursor: pointer;
+    font-size: 15px;
+
+    transition: transform 0.2s ease;
+}
+
+.btn-copy:hover {
+    transform: scale(1.1);
+}
+
+.logo-container{
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.logo{
+    width: 100px;
+    height: 100px;
 }

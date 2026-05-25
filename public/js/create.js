@@ -1,7 +1,7 @@
-const API_URL = 'http://localhost:3000/accounts';
+const API_URL = 'http://127.0.0.1:3000/accounts';
 
 const accountForm = document.getElementById('accountForm');
-const accountIdInput = document.getElementById('accountId');
+const accountIdInput = document.getElementById('id');
 const dominioInput = document.getElementById('dominio');
 const emailInput = document.getElementById('email');
 const userInput = document.getElementById('user');
@@ -22,15 +22,15 @@ async function verifyEditMode() {
         btnSalvar.innerText = 'Update Account';
         
         try {
-            const response = await fetch(`${API_URL}/${goToEdit}`);
+            const response = await fetch(`${API_URL}/?id=${goToEdit}`);
             if (response.ok) {
                 const account = await response.json();
-                
-                accountIdInput.value = account.id;
+            
+                accountIdInput.value = account.id
                 dominioInput.value = account.dominio;
                 emailInput.value = account.email;
                 userInput.value = account.user;
-                passwordInput.Value = account.password;
+                passwordInput.value = account.password;
                 additionalInfoInput.value = account.additional_info || '';
             }
         } catch (error) {
@@ -39,39 +39,60 @@ async function verifyEditMode() {
     }
 }
 
-accountForm.addEventListener('submit', async function(event) {
-    event.preventDefault();
+document.addEventListener('submit', async function(event) {
+
+    if (!event.target && event.target.id !== 'accountForm') {
+        return;
+    }
+
+    event.preventDefault()
+
+    const idField = event.target.querySelector('#id');
+
+    const id = idField ? idField.value : null;
     
-    const id = accountIdInput.value;
     const accountData = {
-        dominio: dominioInput.value,
-        email: emailInput.value,
-        user: userInput.value,
-        password: passwordInput.value,
-        additional_info: additionalInfoInput.value,
+        dominio: event.target.querySelector('#dominio').value,
+        email: event.target.querySelector('#email').value,
+        user: event.target.querySelector('#user').value,
+        password: event.target.querySelector('#password').value,
+        additional_info: event.target.querySelector('#additional_info').value,
     };
 
     try {
+        let response;
         if (id) {
-            await fetch(`${API_URL}/${id}`, {
+
+            response = await fetch(`${API_URL}/${id}`, {
                 method: 'PUT',
-                headers: { 'Content-Type': 'application/json' },
+                mode: 'cors',
+                headers: { 'Content-Type': 'application/json' , 'Accept': 'application/json'},
                 body: JSON.stringify(accountData)
             });
         } else {
-            await fetch(API_URL, {
+            response = await fetch(API_URL, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(accountData)
             });
         }
-        
-        window.location.href = 'index.html';
+
+        if (response && response.ok) {
+            console.log("Data saved. Redirecting...")
+            window.location.href = 'index.html';
+        } else {
+            const errorText = await response.text();
+            console.error('Error saving account:', error);
+            alert(`Server rejected data: ${errorText}`);
+        }
+
     } catch (error) {
-        console.error('Error saving account:', error);
+        console.error('Error saving account:', error, `${API_URL}/${id}`);
         alert('Error saving data.');
     }
+
 });
+
 
 btnLimpar.addEventListener('click', () => {
     accountForm.reset();
